@@ -9,8 +9,9 @@ favoriteRouter.use(bodyParser.json());
 favoriteRouter.route('/')
     .options(cors.corsWithOptions, (req, res) => res.sendStatus(200)) //Handling preflight req. --> Any time a client needs to preflight a req: it will do so by sending a req with the http options method. Client will wait for server to respond with info on what kind of req it will accept to figure out whether or not it can send it's actual req.
     .get(cors.cors, (req, res, next) => {
-        Favorite.find()
-            .populate('user.campsites') 
+        Favorite.find({ user: req.user._id })
+            .populate('user')
+            .populate('campsites')
             .then(favorite => {
                 res.statusCode = 200;
                 res.setHeader('Content-Type', 'application/json');
