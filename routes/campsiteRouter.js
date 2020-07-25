@@ -174,8 +174,7 @@ campsiteRouter.route('/:campsiteId/comments/:commentId')
     Campsite.findById(req.params.campsiteId)
     .then(campsite => {
         if (campsite && campsite.comments.id(req.params.commentId)) {
-            if((campsite.comments.id(req.params.commentId).author._id).equals(req.user._id)) {
-                if (req.body.rating) {
+            if ((campsite.comments.id(req.params.commentId).author._id).equals(req.user._id)) { //making sure the user is the author of this comment                if (req.body.rating) {
                     campsite.comments.id(req.params.commentId).rating = req.body.rating;
                 }
                 if (req.body.text) {
